@@ -26,3 +26,6 @@
 - include: snapshot.yml
   when: elk_elasticsearch_snapshot == true
   tags: snapshot
+
+- include: curator.yml
+  tags: curator.yml
