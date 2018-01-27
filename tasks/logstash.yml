@@ -7,11 +7,6 @@
     - reload systemd
     - restart logstash
 
-  # Two-pass approach. Even listing the plugins takes several seconds,
-  # but it's worth it to pay that overhead rather than the several tens
-  # of seconds it takes to "install" the plugin, even if it's already installed.
-  # A separate action is necessary to upgrade the plugin, so simply checking
-  # the plugin's presence is sufficient for idempotence.
 - name: Gather list of existing Logstash plugins.
   command: /usr/share/logstash/bin/logstash-plugin list
   changed_when: false
@@ -42,12 +37,11 @@
     owner: root
     group: root
     mode: "0644"
-  with_fileglob:
-    - logstash-patterns/*
+  with_fileglob: "{{ elk_logstash_patterns }}"
   notify: restart logstash
   tags: patterns
 
-- name: Copy any optional geoip database
+- name: Copy any optional GeoIP database
   copy:
     src: "{{ item }}"
     dest: "/etc/logstash/dat_files/{{ item | basename }}"
@@ -66,9 +60,10 @@
     owner: root
     group: root
     mode: "0644"
-    validate: "/opt/logstash/bin/logstash --configtest -f %s"
+    validate: "/usr/share/logstash/bin/logstash -t -f %s"
   with_fileglob: "{{ elk_logstash_filters }}"
   notify: restart logstash
+  tags: filters
 
 - name: Start logstash service.
   service:
