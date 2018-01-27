@@ -1,6 +1,4 @@
 ---
-# The `uri` module requires httplib2, although allegedly Ansible v2.1 will drop the dependency.
-# The "snapshot" task list in this role also calls `uri`.
 - name: Install httplib2
   apt:
     name: python-httplib2
@@ -14,11 +12,11 @@
     status_code: 200
     body_format: json
 
-- name: Set default ElasticSearch mappings for Topbeat.
+- name: Set default ElasticSearch mappings for Metricbeat.
   uri:
-    url: "http://localhost:9200/_template/topbeat"
+    url: "http://localhost:9200/_template/metricbeat"
     method: POST
-    body: "{{ lookup('file', 'elasticsearch-template-topbeat.json') }}"
+    body: "{{ lookup('file', 'elasticsearch-template-metricbeat.json') }}"
     status_code: 200
     body_format: json
 

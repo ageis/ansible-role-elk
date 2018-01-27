@@ -1,11 +1,4 @@
 ---
-- name: Add ElasticSearch apt repo.
-  apt_repository:
-    repo: "deb https://artifacts.elastic.co/packages/6.x/apt stable main"
-    state: present
-  notify:
-    - reload systemd
-
 - name: Install ElasticSearch.
   apt:
     name: elasticsearch

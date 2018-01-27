@@ -1,25 +1,4 @@
 ---
-- name: Add Kibana apt repo.
-  apt_repository:
-    repo: "deb http://packages.elastic.co/kibana/4.6/debian stable main"
-    state: present
-  notify:
-    - reload systemd
-
-  # Previous versions of the role used a symlink to support tarball extraction.
-  # Let's provide a sane upgrade path and handle the edge case where it's still
-  # a symlink by converting it to a directory.
-- name: Check Kibana directory.
-  stat:
-    path: /opt/kibana
-  register: kibana_directory_check
-
-- name: Remove Kibana symlink.
-  file:
-    path: /opt/kibana
-    state: absent
-  when: kibana_directory_check.stat.islnk|default(false)
-
 - name: Install Kibana.
   apt:
     name: kibana
@@ -28,9 +7,6 @@
     - reload systemd
     - restart kibana
 
-  # Overriding the default systemd service file that ships with the kibana
-  # apt package. The service file below was written when the role used
-  # a tarball extraction to deploy the kibana files.
 - name: Create Kibana systemd service file.
   template:
     src: kibana.service.j2
@@ -70,7 +46,7 @@
 
 - name: Update Kibana config file.
   lineinfile:
-    dest: /opt/kibana/config/kibana.yml
+    dest: /usr/share/kibana/config/kibana.yml
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: present
