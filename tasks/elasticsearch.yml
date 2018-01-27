@@ -1,7 +1,7 @@
 ---
 - name: Add ElasticSearch apt repo.
   apt_repository:
-    repo: "deb http://packages.elastic.co/elasticsearch/2.x/debian stable main"
+    repo: "deb https://artifacts.elastic.co/packages/6.x/apt stable main"
     state: present
   notify:
     - reload systemd

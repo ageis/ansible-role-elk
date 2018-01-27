@@ -1,7 +1,7 @@
 ---
-- name: Add Logstash apt repo.
+- name: Add Elastic apt repo.
   apt_repository:
-    repo: "deb http://packages.elastic.co/logstash/2.3/debian stable main"
+    repo: "deb https://artifacts.elastic.co/packages/6.x/apt stable main"
     state: present
 
 - name: Install Logstash.
@@ -18,13 +18,13 @@
   # A separate action is necessary to upgrade the plugin, so simply checking
   # the plugin's presence is sufficient for idempotence.
 - name: Gather list of existing Logstash plugins.
-  command: /opt/logstash/bin/plugin list
+  command: /usr/share/logstash/bin/logstash-plugin list
   changed_when: false
   always_run: true
   register: logstash_plugin_check_result
 
 - name: Install Logstash plugins.
-  command: /opt/logstash/bin/plugin install {{ item }}
+  command: /usr/share/logstash/bin/logstash-plugin install {{ item }}
   when: item not in logstash_plugin_check_result.stdout
   with_items: "{{ elk_logstash_plugins }}"
 
@@ -47,8 +47,10 @@
     owner: root
     group: root
     mode: "0644"
-  with_fileglob: "{{ elk_logstash_patterns }}"
+  with_fileglob:
+    - logstash-patterns/*
   notify: restart logstash
+  tags: patterns
 
 - name: Copy any optional geoip database
   copy:

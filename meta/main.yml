@@ -8,6 +8,7 @@ galaxy_info:
     - name: Debian
       versions:
         - jessie
+        - stretch
     - name: Ubuntu
       versions:
         - wily
@@ -18,7 +19,7 @@ galaxy_info:
     - visualization
     - metrics
 dependencies:
-  - role: freedomofpress.generate-ssl-cert
+  - role: ansible-role-generate-ssl-cert
     ssl_certificate_basename: logstash-client
     ssl_certificate_create_users: ['logstash']
     ssl_certificate_permissions_map:
