@@ -1,6 +1,4 @@
 ---
-# defaults file for elk
-
 elk_kibana_user: "kibana"
 elk_kibana_logfile: "/var/log/kibana.log"
 
@@ -55,14 +53,14 @@ elk_logstash_plugins:
 # Interface used for firewall restrictions and IPv4 lookups
 elk_network_interface: eth0
 
-elk_cluster_name: elk-logging
+elk_cluster_name: calyxinstitute
 
 # SSL is disabled by default. Set these vars to the fullpaths to SSL
 # certs you wish to use, and Nginx will force HTTPS connections.
 # You must place the SSL certs there in a separate play.
-elk_nginx_ssl_certificate: ""
-elk_nginx_ssl_certificate_key: ""
-elk_nginx_server_name: localhost
+elk_nginx_ssl_certificate: "/etc/letsencrypt/live/{{ inventory_hostname }}/fullchain.pem"
+elk_nginx_ssl_certificate_key: "/etc/letsencrypt/live/{{ inventory_hostname }}/privkey.pem"
+elk_nginx_server_name: "{{ inventory_hostname }}"
 
 # Not safe for production use! Override to secure logins.
 elk_kibana_username: kibana
@@ -79,7 +77,7 @@ elk_configure_firewall: true
 
 # Allow downstream playbooks to utilize custom webserver configuration
 # Set this to false in order to skip over this role's nginx rollout
-elk_configure_nginx: true
+elk_configure_nginx: false
 
 # Allow downstream playbooks to override patterns and filters fileglob list
 elk_logstash_patterns:

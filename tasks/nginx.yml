@@ -1,11 +1,4 @@
 ---
-# In production we may want to use Apache, rather than Nginx,
-# since Kevin and Conor have more experience with Apache.
-# To do so, the FPF apache config should be broken out into a role,
-# so it can be included here and used with `fpf-ssl-certs`.
-# In the meantime, tossing together a reverse proxy via nginx was
-# pretty trivial.
-
 - name: Install nginx (for Kibana reverse proxy).
   apt:
     name: nginx

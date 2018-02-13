@@ -1,17 +1,13 @@
 galaxy_info:
-  author: Conor Schaefer (@conorsch)
+  author: Kevin Gallagher (@ageis) and Conor Schaefer (@conorsch)
   description: Stands up ELK stack for log aggregation.
-  company: Freedom of the Press Foundation (@freedomofpress)
+  company: Freedom of the Press Foundation and Calyx Institute
   license: MIT
-  min_ansible_version: 1.9
+  min_ansible_version: 2.4.3
   platforms:
     - name: Debian
       versions:
-        - jessie
         - stretch
-    - name: Ubuntu
-      versions:
-        - wily
   galaxy_tags:
     - monitoring
     - logging

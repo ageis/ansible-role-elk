@@ -1,6 +1,7 @@
 TOR_UPTIME %{BASE10NUM} days %{BASE10NUM}:%{BASE10NUM} hours
 TOR_BANDWIDTH [%{BASE10NUM}.]+\s%{WORD}
-TOR_LOG_PREFIX %{SYSLOGTIMESTAMP:timestamp} \[%{WORD:message_type}\]
+TOR_LOG_PREFIX %{SYSLOGTIMESTAMP:timestamp} \[%{WORD:message_type}\](%{SPACE}%{DATA:tor_log_message_domain})?
+TOR_HEARTBEAT %{TOR_LOG_PREFIX} Heartbeat: Tor's uptime is (%{BASE10NUM:tor_uptime_days:int} (day|days)%{SPACE})?%{HOUR:tor_uptime_hours:int}:%{MINUTE:tor_uptime_minutes:int} hours, with %{BASE10NUM:tor_circuits_open:int} circuits open. I've sent %{BASE16FLOAT:tor_data_sent:float} %{WORD:tor_data_sent_unit:string} and received %{BASE16FLOAT:tor_data_received:float} %{WORD:tor_data_received_unit:string}.
 TOR_LOG %{TOR_LOG_PREFIX} %{GREEDYDATA:message}
 TOR_INFO_LOG %{TOR_LOG_PREFIX} %{WORD:action}(_*\(\))?: %{GREEDYDATA:message}
 TOR_NOTICE_TYPE [\w\s]+
