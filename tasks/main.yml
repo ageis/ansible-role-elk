@@ -1,31 +1,31 @@
 ---
 # tasks file for elk
-- include: packages.yml
+- include_tasks: packages.yml
   tags: packages
 
-- include: elasticsearch.yml
+- include_tasks: elasticsearch.yml
   tags: elasticsearch
 
-- include: mappings.yml
+- include_tasks: mappings.yml
   tags: mappings
 
-- include: logstash.yml
+- include_tasks: logstash.yml
   tags: logstash
 
-- include: kibana.yml
+- include_tasks: kibana.yml
   tags: kibana
 
-- include: nginx.yml
+- include_tasks: nginx.yml
   when: elk_configure_nginx == true
   tags: nginx
 
-- include: ufw.yml
+- include_tasks: ufw.yml
   when: elk_configure_firewall == true
   tags: ufw
 
-- include: snapshot.yml
+- include_tasks: snapshot.yml
   when: elk_elasticsearch_snapshot == true
   tags: snapshot
 
-- include: curator.yml
+- include_tasks: curator.yml
   tags: curator.yml

@@ -51,7 +51,7 @@ elk_logstash_plugins:
   - logstash-filter-de_dot
 
 # Interface used for firewall restrictions and IPv4 lookups
-elk_network_interface: eth0
+elk_network_interface: ens18
 
 elk_cluster_name: calyxinstitute
 
